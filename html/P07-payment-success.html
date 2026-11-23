@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>پرداخت موفق - نوبتینو</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--primary: #3262CE;
+			--primary-light: #E7F0FB;
+			--dark: #111B30;
+			--text-primary: #111827;
+			--text-secondary: #526174;
+			--card-bg: #FAFDFE;
+			--border: #DCE6EB;
+			--success: #10B981;
+			--success-bg: #E6F6EB;
+			--success-text: #047857;
+			--white: #FFFFFF;
+			--shadow: 0 4px 16px rgba(17, 27, 48, 0.05);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: linear-gradient(180deg, #DCEBFC 0%, #E5F5F0 100%);
+			background-attachment: fixed;
+			min-height: 100vh;
+			color: var(--text-primary);
+			font-family: 'Vazirmatn', system-ui, sans-serif;
+			font-size: 16px;
+			line-height: 1.6;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		.page-content {
+			padding: 32px 0 48px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.result-card {
+			width: 100%;
+			max-width: 480px;
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 24px;
+			box-shadow: var(--shadow);
+			padding: 32px 24px;
+			text-align: center;
+		}
+
+		.result-icon {
+			width: 88px;
+			height: 88px;
+			margin: 0 auto 20px;
+			border-radius: 50%;
+			background: var(--success-bg);
+			color: var(--success);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 44px;
+		}
+
+		.result-card h1 {
+			font-size: 24px;
+			font-weight: 700;
+			color: var(--text-primary);
+			margin-bottom: 8px;
+		}
+
+		.result-card > p {
+			font-size: 15px;
+			color: var(--text-secondary);
+			margin-bottom: 24px;
+		}
+
+		.receipt {
+			background: var(--primary-light);
+			border-radius: 20px;
+			padding: 16px;
+			text-align: right;
+			margin-bottom: 24px;
+		}
+
+		.receipt-row {
+			display: flex;
+			justify-content: space-between;
+			gap: 16px;
+			padding: 6px 0;
+			font-size: 15px;
+			color: var(--text-secondary);
+		}
+
+		.receipt-row strong {
+			color: var(--text-primary);
+			font-weight: 600;
+		}
+
+		.result-actions {
+			display: grid;
+			gap: 12px;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			min-height: 48px;
+			padding: 0 20px;
+			border-radius: 999px;
+			border: none;
+			cursor: pointer;
+			font-family: inherit;
+			font-size: 15px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background-color 0.2s;
+		}
+
+		.btn:hover { text-decoration: none; }
+
+		.btn-primary {
+			background: var(--primary);
+			color: var(--white);
+		}
+
+		.btn-primary:hover { background: #2654B8; }
+
+		.btn-secondary {
+			background: transparent;
+			border: 1.5px solid var(--primary);
+			color: var(--primary);
+		}
+
+		.btn-secondary:hover { background: var(--primary-light); }
+
+		.auto-return {
+			margin-top: 16px;
+			font-size: 14px;
+			color: var(--text-secondary);
+			min-height: 24px;
+		}
+
+		@media (max-width: 480px) {
+			.container { padding: 0 16px; }
+			.page-content { padding: 24px 0 32px; }
+			.result-card { padding: 24px 20px; border-radius: 20px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* { transition: none !important; }
+		}
+
+		:focus-visible {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
+	</style>
+</head>
+<body>
+	<header></header>
+
+	<main class="container page-content">
+		<section class="result-card" aria-labelledby="resultTitle">
+			<div class="result-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></div>
+			<h1 id="resultTitle">پرداخت با موفقیت انجام شد</h1>
+			<p>نوبت شما ثبت شد. جزئیات آن در پنل کاربر قابل مشاهده است.</p>
+
+			<div class="receipt">
+				<div class="receipt-row"><span>پزشک:</span><strong id="receiptDoctor">—</strong></div>
+				<div class="receipt-row"><span>زمان ویزیت:</span><strong id="receiptTime">—</strong></div>
+				<div class="receipt-row"><span>مبلغ پرداخت‌شده:</span><strong id="receiptAmount">—</strong></div>
+				<div class="receipt-row"><span>کد پیگیری:</span><strong id="receiptTrace">—</strong></div>
+				<div class="receipt-row"><span>شمارهٔ رزرو:</span><strong id="receiptReservation">—</strong></div>
+			</div>
+
+			<div class="result-actions">
+				<a class="btn btn-primary" id="panelLink" href="P04-user-panel.html">
+					<i class="fas fa-calendar-check" aria-hidden="true"></i> مشاهدهٔ نوبت‌های من
+				</a>
+				<a class="btn btn-secondary" href="P01-landing.html">بازگشت به صفحهٔ اصلی</a>
+			</div>
+			<p class="auto-return" id="autoReturn" aria-live="polite"></p>
+		</section>
+	</main>
+
+	<script src="../js/doctors-data.js"></script>
+	<script src="../js/reservation-system.js"></script>
+	<script src="../js/payment-flow.js"></script>
+	<script>
+		(function () {
+			const { reservation } = PaymentFlow.getReservation();
+			const info = PaymentFlow.describe(reservation);
+
+			PaymentFlow.fill('receiptDoctor', info.doctorName);
+			PaymentFlow.fill('receiptTime', `${info.dateText}، ساعت ${info.timeText}`);
+			PaymentFlow.fill('receiptAmount', info.amountText);
+			PaymentFlow.fill('receiptTrace', reservation.transactionId || '—');
+			PaymentFlow.fill('receiptReservation', reservation.id);
+
+			// بازگشت خودکار به سایت پس از چند ثانیه
+			const target = document.getElementById('panelLink').href;
+			const note = document.getElementById('autoReturn');
+			let remaining = 8;
+
+			const tick = () => {
+				note.textContent = `در حال انتقال خودکار به نوبتینو (${String(remaining).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])})…`;
+				if (remaining === 0) {
+					location.href = target;
+					return;
+				}
+				remaining -= 1;
+				timer = setTimeout(tick, 1000);
+			};
+
+			let timer = setTimeout(tick, 1000);
+			document.addEventListener('click', e => {
+				if (e.target.closest('a')) clearTimeout(timer);
+			});
+		})();
+	</script>
+	<script src="../js/site-header.js"></script>
+</body>
+</html>

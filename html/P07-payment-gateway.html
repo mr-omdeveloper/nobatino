@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex">
+	<title>درگاه پرداخت - نوبتینو</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--primary: #3262CE;
+			--primary-light: #E7F0FB;
+			--dark: #111B30;
+			--text-primary: #111827;
+			--text-secondary: #526174;
+			--card-bg: #FAFDFE;
+			--border: #DCE6EB;
+			--input-border: #788BA2;
+			--success: #10B981;
+			--success-bg: #E6F6EB;
+			--success-text: #047857;
+			--error: #DC2626;
+			--error-bg: #FCE9EE;
+			--error-text: #B91C1C;
+			--amber-bg: #FFF4DF;
+			--amber-text: #92400E;
+			--white: #FFFFFF;
+			--shadow: 0 4px 16px rgba(17, 27, 48, 0.05);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: linear-gradient(180deg, #DCEBFC 0%, #E5F5F0 100%);
+			background-attachment: fixed;
+			min-height: 100vh;
+			color: var(--text-primary);
+			font-family: 'Vazirmatn', system-ui, sans-serif;
+			font-size: 16px;
+			line-height: 1.6;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		.page-content {
+			padding: 32px 0 48px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.gateway-card {
+			width: 100%;
+			max-width: 440px;
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 24px;
+			box-shadow: var(--shadow);
+			padding: 24px;
+		}
+
+		.gateway-head {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding-bottom: 20px;
+			margin-bottom: 20px;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.gateway-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 16px;
+			background: var(--dark);
+			color: var(--white);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
+			flex-shrink: 0;
+		}
+
+		.gateway-head h1 {
+			font-size: 20px;
+			font-weight: 700;
+			color: var(--text-primary);
+		}
+
+		.gateway-head p {
+			font-size: 14px;
+			color: var(--text-secondary);
+		}
+
+		.demo-note {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			background: var(--amber-bg);
+			color: var(--amber-text);
+			border-radius: 20px;
+			padding: 12px 16px;
+			font-size: 14px;
+			font-weight: 500;
+			margin-bottom: 20px;
+		}
+
+		.summary {
+			background: var(--primary-light);
+			border-radius: 20px;
+			padding: 16px;
+			margin-bottom: 24px;
+		}
+
+		.summary-row {
+			display: flex;
+			justify-content: space-between;
+			gap: 16px;
+			font-size: 15px;
+			color: var(--text-secondary);
+			padding: 6px 0;
+		}
+
+		.summary-row strong {
+			color: var(--text-primary);
+			font-weight: 600;
+			text-align: left;
+		}
+
+		.summary-row.total {
+			margin-top: 8px;
+			padding-top: 12px;
+			border-top: 1px solid var(--border);
+			font-size: 16px;
+			color: var(--text-primary);
+			font-weight: 600;
+		}
+
+		.summary-row.total strong {
+			color: var(--primary);
+			font-size: 18px;
+		}
+
+		.field {
+			margin-bottom: 16px;
+		}
+
+		.field label {
+			display: block;
+			font-size: 14px;
+			font-weight: 600;
+			margin-bottom: 8px;
+		}
+
+		.field input {
+			width: 100%;
+			min-height: 44px;
+			padding: 0 16px;
+			border: 1px solid var(--input-border);
+			border-radius: 20px;
+			background: var(--white);
+			font-family: inherit;
+			font-size: 15px;
+			color: var(--text-primary);
+		}
+
+		.field input:focus {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+			border-color: var(--primary);
+		}
+
+		.gateway-actions {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 12px;
+			margin-top: 24px;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			min-height: 48px;
+			padding: 0 20px;
+			border-radius: 999px;
+			border: none;
+			cursor: pointer;
+			font-family: inherit;
+			font-size: 15px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: background-color 0.2s, opacity 0.2s;
+		}
+
+		.btn:hover { text-decoration: none; }
+
+		.btn-success {
+			background: var(--success);
+			color: var(--white);
+		}
+
+		.btn-success:hover { background: #0A9E6E; }
+
+		.btn-fail {
+			background: var(--error-bg);
+			color: var(--error-text);
+		}
+
+		.btn-fail:hover { background: #F9D6DF; }
+
+		.btn-ghost {
+			background: transparent;
+			border: 1.5px solid var(--border);
+			color: var(--text-secondary);
+			font-size: 14px;
+			min-height: 44px;
+		}
+
+		.btn-ghost:hover { background: var(--white); }
+
+		.back-link {
+			margin-top: 16px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.btn[disabled] {
+			opacity: 0.7;
+			cursor: progress;
+		}
+
+		.processing {
+			display: none;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			min-height: 48px;
+			font-weight: 600;
+			color: var(--text-primary);
+		}
+
+		.processing.active { display: flex; }
+
+		.spinner {
+			width: 18px;
+			height: 18px;
+			border: 2px solid var(--border);
+			border-top-color: var(--primary);
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+		}
+
+		@keyframes spin {
+			to { transform: rotate(360deg); }
+		}
+
+		@media (max-width: 480px) {
+			.container { padding: 0 16px; }
+			.page-content { padding: 24px 0 32px; }
+			.gateway-card { padding: 20px; border-radius: 20px; }
+			.gateway-actions { grid-template-columns: 1fr; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* { transition: none !important; animation-duration: 0.01ms !important; }
+		}
+
+		:focus-visible {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
+	</style>
+</head>
+<body>
+	<header></header>
+
+	<main class="container page-content">
+		<section class="gateway-card" aria-labelledby="gatewayTitle">
+			<div class="gateway-head">
+				<div class="gateway-icon"><i class="fas fa-lock" aria-hidden="true"></i></div>
+				<div>
+					<h1 id="gatewayTitle">درگاه پرداخت امن</h1>
+					<p>پرداخت هزینهٔ ویزیت</p>
+				</div>
+			</div>
+
+			<div class="demo-note">
+				<i class="fas fa-flask" aria-hidden="true"></i>
+				<span>درگاه فرضی است؛ نتیجهٔ پرداخت را خودتان انتخاب کنید.</span>
+			</div>
+
+			<div class="summary">
+				<div class="summary-row"><span>پزشک:</span><strong id="summaryDoctor">—</strong></div>
+				<div class="summary-row"><span>زمان ویزیت:</span><strong id="summaryTime">—</strong></div>
+				<div class="summary-row"><span>شمارهٔ رزرو:</span><strong id="summaryReservation">—</strong></div>
+				<div class="summary-row total"><span>مبلغ قابل پرداخت:</span><strong id="summaryAmount">—</strong></div>
+			</div>
+
+			<form id="gatewayForm" novalidate>
+				<div class="field">
+					<label for="cardNumber">شمارهٔ کارت</label>
+					<input type="text" id="cardNumber" inputmode="numeric" autocomplete="off" value="۶۲۱۹-۸۶۹۱-۰۰۰۰-۱۲۳۴">
+				</div>
+				<div class="field">
+					<label for="cvv2">CVV2</label>
+					<input type="password" id="cvv2" inputmode="numeric" maxlength="4" value="123">
+				</div>
+
+				<div class="gateway-actions" id="gatewayActions">
+					<button type="submit" class="btn btn-success" data-result="success">
+						<i class="fas fa-circle-check" aria-hidden="true"></i> پرداخت موفق
+					</button>
+					<button type="submit" class="btn btn-fail" data-result="failure">
+						<i class="fas fa-circle-xmark" aria-hidden="true"></i> پرداخت ناموفق
+					</button>
+				</div>
+			</form>
+
+			<div class="processing" id="processing" role="status" aria-live="polite">
+				<span class="spinner" aria-hidden="true"></span>
+				<span id="processingText">در حال پردازش پرداخت…</span>
+			</div>
+
+			<div class="back-link">
+				<a class="btn btn-ghost" id="backLink" href="P02-doctor-details.html">
+					<i class="fas fa-arrow-right" aria-hidden="true"></i> بازگشت به صفحهٔ پزشک
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<script src="../js/doctors-data.js"></script>
+	<script src="../js/reservation-system.js"></script>
+	<script src="../js/payment-flow.js"></script>
+	<script>
+		(function () {
+			const { reservation, demo } = PaymentFlow.getReservation();
+			const info = PaymentFlow.describe(reservation);
+
+			PaymentFlow.fill('summaryDoctor', info.doctorName);
+			PaymentFlow.fill('summaryTime', `${info.dateText}، ساعت ${info.timeText}`);
+			PaymentFlow.fill('summaryReservation', reservation.id);
+			PaymentFlow.fill('summaryAmount', info.amountText);
+			document.getElementById('backLink').href = 'P02-doctor-details.html?id=' + encodeURIComponent(reservation.doctorId);
+
+			const form = document.getElementById('gatewayForm');
+			const actions = document.getElementById('gatewayActions');
+			const processing = document.getElementById('processing');
+			let submitted = false;
+
+			form.addEventListener('submit', e => {
+				e.preventDefault();
+				if (submitted) return;
+				submitted = true;
+
+				const success = e.submitter ? e.submitter.dataset.result === 'success' : true;
+				actions.querySelectorAll('button').forEach(btn => { btn.disabled = true; });
+				processing.classList.add('active');
+				document.getElementById('processingText').textContent = success
+					? 'پرداخت با موفقیت انجام شد؛ در حال ثبت نوبت…'
+					: 'پرداخت تأیید نشد؛ در حال بازگشت…';
+
+				// در محیط واقعی این بخش وب‌سرویس درگاه است.
+				setTimeout(() => {
+					const next = PaymentFlow.url(success ? PaymentFlow.SUCCESS : PaymentFlow.FAILURE, reservation.id);
+					if (demo) return (location.href = next);
+
+					if (success) {
+						const initiated = ReservationSystem.initiatePayment(reservation.id);
+						const confirmed = initiated.success && ReservationSystem.confirmPayment(reservation.id, PaymentFlow.createTransactionId());
+						if (!confirmed) {
+							return (location.href = PaymentFlow.url(PaymentFlow.FAILURE, reservation.id) + '&reason=expired');
+						}
+					} else {
+						ReservationSystem.failPayment(reservation.id, 'تراکنش توسط کاربر رد شد');
+					}
+					location.href = next;
+				}, 1200);
+			});
+		})();
+	</script>
+	<script src="../js/site-header.js"></script>
+</body>
+</html>

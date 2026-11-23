@@ -86,7 +86,7 @@
 		}
 
 		.container {
-			max-width: 1280px;
+			max-width: 1200px;
 			margin: 0 auto;
 			padding: 0 20px;
 		}
@@ -98,23 +98,6 @@
 			position: sticky;
 			top: 0;
 			z-index: 100;
-		}
-
-		.header-content {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 16px 0;
-		}
-
-		.logo {
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			font-size: 20px;
-			font-weight: 700;
-			color: var(--primary);
-			text-decoration: none;
 		}
 
 		.btn {
@@ -185,6 +168,8 @@
 		}
 
 		.main-layout {
+			/* minmax(0) مانع می‌شود نوار افقی نظرات، عرض صفحه را در موبایل بیشتر کند */
+			grid-template-columns: minmax(0, 1fr);
 			display: flex;
 			flex-direction: column;
 			gap: 32px;
@@ -1057,16 +1042,7 @@
 </head>
 <body>
 	<!-- Header -->
-	<header>
-		<div class="container">
-			<div class="header-content">
-				<a href="P01-landing.html" class="logo">
-					<img src="../images/Logo.png" alt="نوبتینو لوگو" style="height: 32px; object-fit: contain;">
-				</a>
-				<a href="P01-landing.html" class="btn btn-secondary btn-small">بازگشت</a>
-			</div>
-		</div>
-	</header>
+	<header></header>
 
 	<!-- Main Content -->
 	<main class="container page-content">
@@ -1195,7 +1171,7 @@
 							<i class="fas fa-lock"></i>
 							رزرو و ادامه پرداخت
 						</button>
-						<button type="button" class="btn btn-primary btn-block" id="paymentBtn" style="display: none;" aria-label="پرداخت">
+						<button type="button" class="btn btn-primary btn-block" id="paymentBtn" style="display: none;" onclick="handlePaymentClick()" aria-label="پرداخت">
 							<i class="fas fa-credit-card"></i>
 							پرداخت
 						</button>
@@ -1646,6 +1622,9 @@
 
 			clearError();
 			startCountdown();
+
+			// بدون تأیید دوم، مستقیم به درگاه پرداخت فرضی (P07) می‌رود
+			handlePaymentClick();
 		}
 
 		function startCountdown() {
@@ -1693,9 +1672,11 @@
 			if (!currentReservation) return;
 
 			const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-			const methodName = selectedMethod === 'zarinpal' ? 'زرین‌پال' : 'آی‌دی‌پی';
+			ReservationSystem.initiatePayment(currentReservation.id);
 
-			alert(`در محیط تولیدی، شما به درگاه پرداخت امن ${methodName} هدایت می‌شوید.\n\nشماره رزرو: ${currentReservation.id}`);
+			// هدایت به درگاه پرداخت فرضی (P07)
+			location.href = 'P07-payment-gateway.html?reservation=' + encodeURIComponent(currentReservation.id)
+				+ '&method=' + encodeURIComponent(selectedMethod);
 		}
 
 		function cancelReservation() {
@@ -1755,5 +1736,6 @@
 
 		document.addEventListener('DOMContentLoaded', initializePage);
 	</script>
+	<script src="../js/site-header.js"></script>
 </body>
 </html>

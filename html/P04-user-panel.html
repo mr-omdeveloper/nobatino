@@ -72,7 +72,7 @@
 		a:hover { text-decoration: underline; }
 
 		.container {
-			max-width: 1080px;
+			max-width: 1200px;
 			margin: 0 auto;
 			padding: 0 20px;
 		}
@@ -84,29 +84,6 @@
 			position: sticky;
 			top: 0;
 			z-index: 100;
-		}
-
-		.header-content {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 12px 0;
-			gap: 12px;
-		}
-
-		.logo {
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			text-decoration: none;
-		}
-
-		.logo:hover { text-decoration: none; }
-
-		.header-actions {
-			display: flex;
-			align-items: center;
-			gap: 8px;
 		}
 
 		/* Buttons */
@@ -1277,13 +1254,9 @@
 <body>
 	<!-- Header -->
 	<header>
-		<div class="container">
-			<div class="header-content">
-				<a href="P01-landing.html" class="logo" aria-label="نوبتینو - صفحهٔ اصلی">
-					<img src="../images/Logo.png" alt="لوگوی نوبتینو" style="height: 32px; object-fit: contain;">
-				</a>
-				<div class="header-actions">
-					<div class="bell-wrap">
+		<!-- اعلان‌های پنل کاربر؛ با سربرگ مشترک (js/site-header.js) در هدر نمایش داده می‌شود -->
+		<div data-header-actions>
+			<div class="bell-wrap">
 						<button type="button" class="bell-btn" onclick="toggleNotifPanel(event)" aria-label="اعلان‌ها" aria-expanded="false" id="bellBtn">
 							<i class="fas fa-bell" aria-hidden="true"></i>
 							<span class="bell-badge" id="bellBadge" hidden>۰</span>
@@ -1296,9 +1269,6 @@
 							<div id="notifList"></div>
 						</div>
 					</div>
-					<a href="P01-landing.html" class="btn btn-ghost btn-small">بازگشت</a>
-				</div>
-			</div>
 		</div>
 	</header>
 
@@ -2369,5 +2339,6 @@
 		fillProfileForm();
 		renderAll();
 	</script>
+	<script src="../js/site-header.js"></script>
 </body>
 </html>

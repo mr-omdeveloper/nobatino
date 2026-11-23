@@ -110,7 +110,7 @@
 
 		/* Container */
 		.container {
-			max-width: 1280px;
+			max-width: 1200px;
 			margin: 0 auto;
 			padding: 0 20px;
 		}
@@ -122,53 +122,6 @@
 			position: sticky;
 			top: 0;
 			z-index: 100;
-		}
-
-		.header-content {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 16px 0;
-		}
-
-		.logo {
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			font-size: 20px;
-			font-weight: 700;
-			color: var(--primary);
-		}
-
-		.logo img {
-			height: 48px;
-			width: auto;
-		}
-
-		.nav-desktop {
-			display: flex;
-			align-items: center;
-			gap: 32px;
-			flex: 1;
-			justify-content: center;
-		}
-
-		.nav-desktop a {
-			font-size: 15px;
-			color: var(--text-primary);
-			transition: color 0.2s;
-			font-weight: 500;
-		}
-
-		.nav-desktop a:hover {
-			color: var(--primary);
-			text-decoration: none;
-		}
-
-		.auth-buttons {
-			display: flex;
-			gap: 12px;
-			align-items: center;
 		}
 
 		.btn {
@@ -360,54 +313,6 @@
 
 		.dropdown-trigger input[type="hidden"] {
 			display: none;
-		}
-
-		/* Mobile Menu */
-		.menu-toggle {
-			display: none;
-			background: none;
-			border: none;
-			font-size: 24px;
-			cursor: pointer;
-			color: var(--text-primary);
-		}
-
-		.nav-mobile {
-			display: none;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			background: var(--white);
-			border-bottom: 1px solid var(--border);
-			flex-direction: column;
-			padding: 16px 20px;
-			gap: 12px;
-		}
-
-		.nav-mobile.active {
-			display: flex;
-		}
-
-		@media (max-width: 768px) {
-			.nav-desktop {
-				display: none;
-			}
-
-			.menu-toggle {
-				display: block;
-			}
-
-			.nav-mobile a {
-				color: var(--text-primary);
-				font-weight: 500;
-				padding: 12px 0;
-				border-bottom: 1px solid var(--border);
-			}
-
-			.nav-mobile a:last-child {
-				border-bottom: none;
-			}
 		}
 
 		/* Hero Section */
@@ -995,38 +900,7 @@
 </head>
 <body>
 	<!-- Header -->
-	<header>
-		<div class="container">
-			<div class="header-content">
-				<div class="logo">
-					<img src="../images/Logo.png" alt="نوبتینو لوگو">
-				</div>
-
-				<nav class="nav-desktop">
-					<a href="#search">جست‌وجو</a>
-					<a href="#specialties">تخصص‌ها</a>
-					<a href="#about">درباره ما</a>
-					<a href="#contact">تماس</a>
-				</nav>
-
-				<div class="auth-buttons">
-					<button class="btn btn-secondary btn-small">ورود</button>
-					<button class="btn btn-primary btn-small">ثبت‌نام</button>
-				</div>
-
-				<button class="menu-toggle" id="menuToggle">
-					<i class="fas fa-bars"></i>
-				</button>
-			</div>
-
-			<nav class="nav-mobile" id="navMobile">
-				<a href="#search">جست‌وجو</a>
-				<a href="#specialties">تخصص‌ها</a>
-				<a href="#about">درباره ما</a>
-				<a href="#contact">تماس</a>
-			</nav>
-		</div>
-	</header>
+	<header></header>
 
 	<!-- Hero Section -->
 	<section id="search" class="hero">
@@ -1829,5 +1703,6 @@
 		`;
 		document.head.appendChild(style);
 	</script>
+	<script src="../js/site-header.js"></script>
 </body>
 </html>
