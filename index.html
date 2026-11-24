@@ -103,9 +103,12 @@
 			margin-left: 5px;
 		}
 	</style>
+	<link rel="stylesheet" href="css/P03-account.css">
+	<script src="js/P03-session.js"></script>
 </head>
 <body>
 	<div class="container">
+		<div class="p03-account p03-index-account" data-p03-account hidden></div>
 		<h1>نوبتینو</h1>
 		<p class="subtitle">سیستم رزرو آنلاین نوبت پزشک</p>
 
@@ -115,6 +118,9 @@
 			</a>
 			<a href="html/P02-doctor-details.html?id=doctor-001" class="link-btn secondary">
 				👨‍⚕️ جزئیات پزشک
+			</a>
+			<a href="html/P03-auth.html" class="link-btn secondary" data-p03-auth="login" data-p03-guest>
+				ورود و ثبت‌نام
 			</a>
 			<a href="html/P04-user-panel.html" class="link-btn secondary">
 				👤 پنل کاربر
@@ -132,6 +138,7 @@
 				├── 📁 html/<br>
 				│   ├── P01-landing.html<br>
 				│   ├── P02-doctor-details.html<br>
+				│   ├── P03-auth.html<br>
 				│   ├── P04-user-panel.html<br>
 				│   └── P05-doctor-panel.html<br>
 				├── 📁 js/<br>

@@ -1,0 +1,97 @@
+/* Header controls use the shared Nobatino surface, focus and spacing values. */
+.p03-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+[data-p03-account][hidden], [data-p03-guest][hidden], [data-account-panel][hidden], .p03-account-menu[hidden] { display: none !important; }
+.p03-account {
+  position: relative;
+  flex: none;
+  direction: rtl;
+  color: #111B30;
+}
+.p03-index-account { display: flex; justify-content: flex-end; margin-block-end: 8px; }
+.p03-account svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.p03-account-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid #DCE6EB;
+  border-radius: 999px;
+  background: #FAFDFE;
+  font: inherit;
+  color: #111B30;
+  cursor: pointer;
+}
+.p03-account-toggle:hover, .p03-account-toggle[aria-expanded="true"] { background: #E7F0FB; border-color: #788BA2; }
+.p03-account-toggle:focus-visible, .p03-account-action:focus-visible { outline: 2px solid #3262CE; outline-offset: 2px; }
+.p03-account-avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #E7F0FB;
+  color: #111B30;
+  font-size: 15px;
+  font-weight: 700;
+}
+.p03-account-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.p03-account-menu {
+  position: absolute;
+  z-index: 5;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + 8px);
+  width: min(240px, calc(100vw - 40px));
+  padding: 8px;
+  border: 1px solid #DCE6EB;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgb(17 27 48 / 5%);
+  background: #FAFDFE;
+  text-align: start;
+}
+.p03-account-summary {
+  display: grid;
+  padding: 8px 12px 12px;
+  border-bottom: 1px solid #DCE6EB;
+  margin-bottom: 4px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.p03-account-summary bdi { justify-self: start; color: #526174; font-size: 13px; }
+.p03-account-menu .p03-account-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  color: #111B30;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+.p03-account-menu .p03-account-action:hover { background: #E7F0FB; }
+.p03-account-menu .p03-account-exit:hover { background: #FCE9EE; }

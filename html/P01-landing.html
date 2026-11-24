@@ -124,6 +124,61 @@
 			z-index: 100;
 		}
 
+<<<<<<< HEAD
+=======
+		.header-content {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 16px 0;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			font-size: 20px;
+			font-weight: 700;
+			color: var(--primary);
+		}
+
+		.logo img {
+			height: 48px;
+			width: auto;
+		}
+
+		.nav-desktop {
+			display: flex;
+			align-items: center;
+			gap: 32px;
+			flex: 1;
+			justify-content: center;
+		}
+
+		.nav-desktop a {
+			font-size: 15px;
+			color: var(--text-primary);
+			transition: color 0.2s;
+			font-weight: 500;
+		}
+
+		.nav-desktop a:hover {
+			color: var(--primary);
+			text-decoration: none;
+		}
+
+		.auth-buttons {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+		}
+
+		.auth-buttons .btn {
+			line-height: normal;
+			text-decoration: none;
+		}
+
+>>>>>>> upstream/main
 		.btn {
 			display: inline-flex;
 			align-items: center;
@@ -315,6 +370,73 @@
 			display: none;
 		}
 
+<<<<<<< HEAD
+=======
+		/* Mobile Menu */
+		.menu-toggle {
+			display: none;
+			background: none;
+			border: none;
+			font-size: 24px;
+			cursor: pointer;
+			color: var(--text-primary);
+		}
+
+		.nav-mobile {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			background: var(--white);
+			border-bottom: 1px solid var(--border);
+			flex-direction: column;
+			padding: 16px 20px;
+			gap: 12px;
+		}
+
+		.nav-mobile.active {
+			display: flex;
+		}
+
+		@media (max-width: 768px) {
+			.nav-desktop {
+				display: none;
+			}
+
+			.menu-toggle {
+				display: block;
+				position: relative;
+			}
+
+			.menu-toggle::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 44px;
+				height: 44px;
+				transform: translate(-50%, -50%);
+			}
+
+			.header-content:has(> .p03-account:not([hidden])) > .menu-toggle {
+				margin-inline-start: auto;
+				margin-inline-end: 20px;
+			}
+
+			.nav-mobile a {
+				color: var(--text-primary);
+				font-weight: 500;
+				padding: 12px 0;
+				border-bottom: 1px solid var(--border);
+			}
+
+			.nav-mobile a:last-child {
+				border-bottom: none;
+			}
+		}
+
+>>>>>>> upstream/main
 		/* Hero Section */
 		.hero {
 			padding: 60px 0;
@@ -411,6 +533,7 @@
 
 			.dropdown-menu {
 				max-height: 250px !important;
+				min-width: 0;
 				max-width: 90vw;
 			}
 		}
@@ -896,11 +1019,56 @@
 				margin-top: 16px;
 			}
 		}
+
+		@media (max-width: 359px) {
+			.logo img { height: 40px; }
+			.auth-buttons { gap: 8px; }
+			.auth-buttons .btn { padding-inline: 12px; }
+			.hero-content, .search-row { grid-template-columns: minmax(0, 1fr); }
+			.dropdown-trigger-input { min-width: 0; }
+		}
 	</style>
+	<link rel="stylesheet" href="../css/P03-account.css">
+	<script src="../js/P03-session.js"></script>
 </head>
 <body>
 	<!-- Header -->
+<<<<<<< HEAD
 	<header></header>
+=======
+	<header>
+		<div class="container">
+			<div class="header-content">
+				<div class="logo">
+					<img src="../images/Logo.png" alt="نوبتینو لوگو">
+				</div>
+
+				<nav class="nav-desktop">
+					<a href="#search">جست‌وجو</a>
+					<a href="#specialties">تخصص‌ها</a>
+					<a href="#about">درباره ما</a>
+					<a href="#contact">تماس</a>
+				</nav>
+
+				<div class="auth-buttons" data-p03-guest>
+					<a class="btn btn-secondary btn-small" href="P03-auth.html" data-p03-auth="login">ورود</a>
+					<a class="btn btn-primary btn-small" href="P03-auth.html?mode=register" data-p03-auth="register">ثبت‌نام</a>
+				</div>
+				<button class="menu-toggle" id="menuToggle" type="button" aria-label="منوی سایت" aria-controls="navMobile" aria-expanded="false">
+					<i class="fas fa-bars" aria-hidden="true"></i>
+				</button>
+				<div class="p03-account" data-p03-account hidden></div>
+			</div>
+
+			<nav class="nav-mobile" id="navMobile">
+				<a href="#search">جست‌وجو</a>
+				<a href="#specialties">تخصص‌ها</a>
+				<a href="#about">درباره ما</a>
+				<a href="#contact">تماس</a>
+			</nav>
+		</div>
+	</header>
+>>>>>>> upstream/main
 
 	<!-- Hero Section -->
 	<section id="search" class="hero">
@@ -1267,8 +1435,17 @@
 		const menuToggle = document.getElementById('menuToggle');
 		const navMobile = document.getElementById('navMobile');
 
+		function setMobileMenu(open) {
+			navMobile.classList.toggle('active', open);
+			menuToggle.setAttribute('aria-expanded', String(open));
+		}
 		menuToggle?.addEventListener('click', () => {
-			navMobile.classList.toggle('active');
+			setMobileMenu(!navMobile.classList.contains('active'));
+		});
+		document.addEventListener('click', (event) => {
+			if (navMobile.classList.contains('active') && !menuToggle.contains(event.target) && !navMobile.contains(event.target)) {
+				setMobileMenu(false);
+			}
 		});
 
 		// Close menu on link click and handle smooth scrolling
@@ -1277,7 +1454,7 @@
 				const href = link.getAttribute('href');
 				// Close mobile menu on any navigation link click
 				if (navMobile && navMobile.classList.contains('active')) {
-					navMobile.classList.remove('active');
+				setMobileMenu(false);
 				}
 				// Smooth scroll is handled by CSS scroll-behavior: smooth
 				// and scroll-margin-top offsets
@@ -1510,7 +1687,7 @@
 				// Close on outside click
 				document.addEventListener('click', (e) => {
 					if (!this.container.contains(e.target)) {
-						this.close();
+						this.close(false);
 					}
 				});
 
@@ -1547,7 +1724,7 @@
 					const otherContainer = document.getElementById(activeDropdown);
 					if (otherContainer) {
 						const otherDropdown = otherContainer.customDropdownInstance;
-						if (otherDropdown) otherDropdown.close();
+						if (otherDropdown) otherDropdown.close(false);
 					}
 				}
 
@@ -1560,10 +1737,11 @@
 				// Attach scroll listener to keep dropdown attached during scrolling
 				document.addEventListener('scroll', this.scrollHandler, true);
 
-				setTimeout(() => this.triggerInput.focus(), 50);
+				setTimeout(() => { if (this.isOpen) this.triggerInput.focus(); }, 50);
 			}
 
-			close() {
+			close(restoreFocus = true) {
+				if (!this.isOpen) return;
 				this.isOpen = false;
 				if (activeDropdown === this.containerId) {
 					activeDropdown = null;
@@ -1573,7 +1751,7 @@
 				this.triggerInput.value = '';
 				this.allItems.forEach(item => item.classList.remove('hidden'));
 				this.updateIconDisplay();
-				this.trigger.focus();
+				if (restoreFocus) this.trigger.focus();
 
 				// Remove scroll listener and cancel pending animation frame
 				document.removeEventListener('scroll', this.scrollHandler, true);

@@ -1250,6 +1250,8 @@
 			}
 		}
 	</style>
+	<link rel="stylesheet" href="../css/P03-account.css">
+	<script src="../js/P03-session.js"></script>
 </head>
 <body>
 	<!-- Header -->
@@ -1269,6 +1271,14 @@
 							<div id="notifList"></div>
 						</div>
 					</div>
+<<<<<<< HEAD
+=======
+					<a href="P01-landing.html" class="btn btn-ghost btn-small">بازگشت</a>
+					<a href="P03-auth.html" class="btn btn-secondary btn-small" data-p03-auth="login" data-p03-guest>ورود</a>
+					<div class="p03-account" data-p03-account hidden></div>
+				</div>
+			</div>
+>>>>>>> upstream/main
 		</div>
 	</header>
 
@@ -1460,7 +1470,14 @@
 
 		/* ---------- Helpers ---------- */
 
-		const PROFILE_KEY = 'nobatino_user_profile';
+		const profileOwner = window.NobatinoAccount.current();
+		const PROFILE_KEY = window.NobatinoAccount.profileKey(profileOwner);
+		function reloadIfAccountChanged() {
+			if (window.NobatinoAccount.current() !== profileOwner) location.reload();
+		}
+		window.addEventListener('nobatino:account-change', reloadIfAccountChanged);
+		window.addEventListener('storage', reloadIfAccountChanged);
+		window.addEventListener('pageshow', reloadIfAccountChanged);
 		const NOTIFS_KEY = 'nobatino_notifications';
 		const MESSAGES_KEY = 'nobatino_messages';
 		const VISITS_KEY = 'nobatino_visits';
@@ -1546,7 +1563,7 @@
 				const raw = localStorage.getItem(PROFILE_KEY);
 				if (raw) return JSON.parse(raw);
 			} catch (e) { /* ignore corrupt data */ }
-			return { fullName: 'کاربر نوبتینو', phone: '', email: '', address: '', photo: null };
+			return { fullName: 'کاربر نوبتینو', phone: profileOwner || '', email: '', address: '', photo: null };
 		}
 
 		function initials(name) {
@@ -1554,8 +1571,11 @@
 		}
 
 		function renderAvatar(el, profile) {
-			if (profile.photo) {
-				el.innerHTML = `<img src="${profile.photo}" alt="">`;
+			if (typeof profile.photo === 'string' && /^data:image\/[\w.+-]+;base64,/i.test(profile.photo)) {
+				const image = new Image();
+				image.alt = '';
+				image.src = profile.photo;
+				el.replaceChildren(image);
 			} else {
 				el.textContent = initials(profile.fullName);
 			}
@@ -1567,6 +1587,7 @@
 			document.getElementById('heroPhone').innerHTML =
 				`<i class="fas fa-mobile-screen" aria-hidden="true"></i> ${p.phone ? faNum(p.phone) : 'شماره ثبت نشده'}`;
 			renderAvatar(document.getElementById('heroAvatar'), p);
+			window.dispatchEvent(new Event('nobatino:profile-change'));
 		}
 
 		function fillProfileForm() {

@@ -229,6 +229,7 @@
 			align-items: center;
 			gap: 6px;
 		}
+		.doctor-meta span[hidden] { display: none; }
 
 		.doctor-meta .stars {
 			color: #F59E0B;
@@ -1310,10 +1311,28 @@
 			}
 		}
 	</style>
+	<link rel="stylesheet" href="../css/P03-account.css">
+	<script src="../js/P03-session.js"></script>
 </head>
 <body>
 	<!-- Header -->
+<<<<<<< HEAD
 	<header></header>
+=======
+	<header>
+		<div class="container">
+			<div class="header-content">
+				<a href="P01-landing.html" class="logo" aria-label="نوبتینو - صفحهٔ اصلی">
+					<img src="../images/Logo.png" alt="لوگوی نوبتینو" style="height: 32px; object-fit: contain;">
+				</a>
+				<div class="header-actions">
+					<a href="P01-landing.html" class="btn btn-ghost btn-small">بازگشت</a>
+					<div class="p03-account" data-p03-account="staff" hidden></div>
+				</div>
+			</div>
+		</div>
+	</header>
+>>>>>>> upstream/main
 
 	<main class="container page-content">
 		<!-- Doctor hero -->
@@ -1325,7 +1344,7 @@
 				<div class="doctor-meta">
 					<span class="stars" id="heroRating"></span>
 					<span id="heroReviews"></span>
-					<span><i class="fas fa-id-card" aria-hidden="true"></i> نظام پزشکی: <span id="heroCouncil">—</span></span>
+					<span><i class="fas fa-id-card" aria-hidden="true"></i> <span id="heroCredentialLabel">نظام پزشکی:</span> <bdi id="heroCouncil">—</bdi></span>
 					<span><i class="fas fa-money-check-dollar" aria-hidden="true"></i> ویزیت: <span id="heroFee">—</span></span>
 					<span id="heroAddress"><i class="fas fa-location-dot" aria-hidden="true"></i> —</span>
 				</div>
@@ -1713,6 +1732,8 @@
 		const VACATIONS_KEY = 'nobatino_vacations';
 		const VISITS_KEY = 'nobatino_visits';
 		const MESSAGES_KEY = 'nobatino_messages';
+		const accountSession = window.NobatinoAccount;
+		const registeredDoctor = accountSession.currentDoctor();
 
 		// Untouched copy of the shipped availability data (reset + first-init source)
 		const BASE_AVAILABILITY = JSON.parse(JSON.stringify(appointmentAvailability));
@@ -1815,7 +1836,7 @@
 		}
 
 		function getEffectiveDoctor(id) {
-			const base = getDoctorById(id);
+			const base = id === registeredDoctor?.id ? registeredDoctor : getDoctorById(id);
 			if (!base) return null;
 			const override = getDoctorOverrides()[id];
 			return Object.assign({}, base, override || {});
@@ -1844,8 +1865,8 @@
 				list: [{
 					id: 'clinic-1',
 					name: 'مطب اصلی',
-					address: doc ? doc.clinicAddress : '',
-					phone: doc ? doc.phone : '',
+					address: doc?.clinicAddress ?? '',
+					phone: doc?.phone ?? '',
 					availability: JSON.parse(JSON.stringify(baseAvail))
 				}]
 			};
@@ -1902,18 +1923,28 @@
 			const doc = getEffectiveDoctor(currentDoctorId);
 			if (!doc) return;
 
-			document.getElementById('heroAvatar').innerHTML = `<img src="../images/${doc.photo}" alt="">`;
+			const isRegistered = doc.id === registeredDoctor?.id;
+			const avatar = document.getElementById('heroAvatar');
+			if (isRegistered) avatar.textContent = Array.from(doc.name)[0] || '';
+			else avatar.innerHTML = `<img src="../images/${doc.photo}" alt="">`;
 			document.getElementById('heroName').textContent = doc.name;
-			document.getElementById('heroSpecialty').textContent = doc.specialty;
-			document.getElementById('heroRating').innerHTML =
-				`<i class="fas fa-star" aria-hidden="true"></i> ${faNum(doc.rating)} از ۵`;
-			document.getElementById('heroReviews').textContent = `${faNum(doc.reviewCount)} نظر ثبت‌شده`;
-			document.getElementById('heroCouncil').textContent = faNum(doc.medicalCouncilNumber);
-			document.getElementById('heroFee').textContent = formatFee(doc.consultationFeeNumeric);
+			document.getElementById('heroSpecialty').textContent = doc.specialty || 'تخصص ثبت نشده';
+			const rating = document.getElementById('heroRating');
+			const reviews = document.getElementById('heroReviews');
+			rating.hidden = reviews.hidden = isRegistered;
+			if (!isRegistered) {
+				rating.innerHTML = `<i class="fas fa-star" aria-hidden="true"></i> ${faNum(doc.rating)} از ۵`;
+				reviews.textContent = `${faNum(doc.reviewCount)} نظر ثبت‌شده`;
+			}
+			document.getElementById('heroCredentialLabel').textContent = isRegistered ? 'شماره پروانه پزشکی:' : 'نظام پزشکی:';
+			document.getElementById('heroCouncil').textContent = faNum(isRegistered ? doc.medicalLicenseNumber : doc.medicalCouncilNumber);
+			document.getElementById('heroFee').textContent = doc.consultationFeeNumeric ? formatFee(doc.consultationFeeNumeric) : '—';
 			const clinic = activeClinic();
 			document.getElementById('heroAddress').innerHTML =
 				`<i class="fas fa-location-dot" aria-hidden="true"></i> ${escapeHtml(clinic ? (clinic.address || 'آدرس مطب ثبت نشده') : '—')} — ${escapeHtml(clinic && clinic.name ? clinic.name : '')}`;
-			document.getElementById('publicPageLink').href = `P02-doctor-details.html?id=${doc.id}`;
+			const publicLink = document.getElementById('publicPageLink');
+			if (isRegistered) publicLink?.remove();
+			else publicLink.href = `P02-doctor-details.html?id=${doc.id}`;
 		}
 
 		/* ---------- Rendering: stats & appointments ---------- */
@@ -1956,7 +1987,7 @@
 			document.getElementById('statToday').textContent = faNum(todayCount);
 			document.getElementById('statWeek').textContent = faNum(weekCount);
 			document.getElementById('statRevenue').textContent = formatFee(weekRevenue);
-			document.getElementById('statRating').textContent = faNum(doc ? doc.rating : '—');
+			document.getElementById('statRating').textContent = faNum(doc?.rating ?? '—');
 			document.getElementById('countAppts').textContent = faNum(all.length);
 		}
 
@@ -2863,7 +2894,7 @@
 		}
 
 		function selectDoctor(id) {
-			if (!getDoctorById(id)) return;
+			if (registeredDoctor || !getDoctorById(id)) return;
 			currentDoctorId = id;
 			localStorage.setItem(CURRENT_DOCTOR_KEY, id);
 			calWeekOffset = 0;
@@ -2910,17 +2941,26 @@
 		});
 		document.getElementById('durationSelect').addEventListener('change', renderCapacity);
 
-		// Doctor identity for the prototype: URL param `?id=` (same convention as P02),
-		// falling back to the last doctor viewed in this browser, then doctor-001.
-		// In the final version the login page (P03) sets the identity instead.
+		// Registered doctors always use their account. Keep the standalone sample panel available.
 		const urlDoctor = new URLSearchParams(window.location.search).get('id');
-		if (urlDoctor && getDoctorById(urlDoctor)) {
+		if (registeredDoctor) {
+			currentDoctorId = registeredDoctor.id;
+		} else if (urlDoctor && getDoctorById(urlDoctor)) {
 			currentDoctorId = urlDoctor;
 			localStorage.setItem(CURRENT_DOCTOR_KEY, urlDoctor);
 		} else {
 			const savedDoctor = localStorage.getItem(CURRENT_DOCTOR_KEY);
 			currentDoctorId = (savedDoctor && getDoctorById(savedDoctor)) ? savedDoctor : 'doctor-001';
 		}
+		function syncDoctorAccount() {
+			const doctor = accountSession.currentDoctor();
+			if (doctor?.id === registeredDoctor?.id) return;
+			if (doctor) location.reload();
+			else location.replace(accountSession.authUrl('login', location.href));
+		}
+		window.addEventListener('nobatino:account-change', syncDoctorAccount);
+		window.addEventListener('storage', syncDoctorAccount);
+		window.addEventListener('pageshow', syncDoctorAccount);
 
 		applyAvailabilityGlobal();
 		renderHero();
